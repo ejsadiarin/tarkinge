@@ -1,9 +1,16 @@
 // import Navbar from "../components/dashboard/navbar";
 // import Sidebar from "../components/dashboard/sidebar"
 
+type FilterType = {
+  time: string,
+}
+
+const Filters = ["daily", "weekly", "monthly", "yearly"];
+
+
 export default function Dashboard() {
   return (
-    <div className="flex">
+    <div className="flex w-screen h-screen ">
 
       {/* <Sidebar /> */}
       <nav className="flex flex-col border-r border-r-gray-700 h-screen">
@@ -19,30 +26,37 @@ export default function Dashboard() {
         <a href="/settings">Settings</a>
       </nav>
 
-      <div className="flex flex-col ">
+      <div className="flex flex-col w-screen h-screen ">
+
         {/* <Navbar /> */}
-        <nav className="block w-screen border-b border-b-gray-700 ">
-          {/* TODO: fix this, such that justify-between works */}
-          <div className="flex items-center justify-around">
-            <section>
-              <h1>test</h1>
-            </section>
-            {/* <div className="flex"> */}
-            <section>
-              <h1>test</h1>
-            </section>
-            {/* </div> */}
-            {/* <div className="flex"> */}
-            {/* <img src="" alt="prof" /> */}
-            {/* </div> */}
-          </div>
-        </nav>
-        <main className="grid grid-cols-3">
-          <section>daily todos</section>
-          <section >
-            <h1>Levers</h1>
+        <nav className="flex items-center justify-between border-b border-gray-700">
+          <section>
+            <h1>test</h1>
           </section>
-          <section>notifications</section>
+          <section>
+            <h1>test</h1>
+          </section>
+        </nav>
+
+        <main className="flex w-full h-full">
+          <section className="bg-purple-800 w-[20%]">
+            <h1>daily levers</h1>
+            <h1>daily todos</h1>
+          </section>
+
+          {/* this is the kanban with filters (or sorters) */}
+          <section className="flex flex-col w-[70%]">
+            <h1 className="text-5xl">Levers</h1>
+            <div className="flex gap-5">
+              {Filters.map((filter) => (
+                <button className="bg-gray-900 rounded-full">{filter}</button>
+              ))}
+            </div>
+          </section>
+
+          <section className="bg-green-500 w-[20%]">
+            <h1>notifications</h1>
+          </section>
         </main>
       </div>
     </div>
