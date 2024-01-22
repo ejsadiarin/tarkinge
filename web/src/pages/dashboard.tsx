@@ -13,9 +13,9 @@ export default function Dashboard() {
     <div className="flex w-screen h-screen ">
 
       {/* <Sidebar /> */}
-      <nav className="flex flex-col border-r border-r-gray-700 h-screen">
+      <nav className="flex flex-col gap-3 border-r border-r-gray-700 h-screen p-5">
         {/* TODO: make this a logo */}
-        <h1 className="text-xl">Tarkinge sidebar</h1>
+        <h1 className="text-xl">tarkinge</h1>
         <a href="/dashboard">Dashboard</a>
         <a href="/controlroom">Control Room</a>
         <a href="/notifications">Notifications</a>
