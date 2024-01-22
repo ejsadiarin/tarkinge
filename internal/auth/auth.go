@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
+	"github.com/markbates/goth/providers/google"
 )
 
 const (
@@ -27,14 +28,14 @@ func NewAuth() {
 
 	store := sessions.NewCookieStore([]byte(key))
 	store.MaxAge(MaxAge)
-
 	store.Options.Path = "/"
 	store.Options.HttpOnly = true
 	store.Options.Secure = IsProd
 
 	gothic.Store = store
 
-  goth.UseProviders(
-    google.New(googleClientID, googleClientSecret, "http://localhost:3000/auth/google/callback)
-  )
+	goth.UseProviders(
+		// google.New(googleClientId, googleClientSecret, "http://localhost:3000/auth/google/callback")
+		google.New(googleClientID, googleClientSecret, "http://localhost:3000/auth/google/callback"),
+	)
 }
