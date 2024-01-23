@@ -18,7 +18,24 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	r.Get("/", s.HelloWorldHandler)
 	r.Get("/health", s.healthHandler)
+
 	r.Get("/auth/{provider}/callback", s.getAuthCallbackFunction)
+
+	r.Get("/logout/{provider}", func(res http.ResponseWriter, req *http.Request) {
+		gothic.Logout(res, req)
+		res.Header().Set("Location", "/")
+		res.WriteHeader(http.StatusTemporaryRedirect)
+	})
+
+	r.Get("/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
+		// try to get the user without re-authenticating
+		// if gothUser, err := gothic.CompleteUserAuth(w, r); err == nil {
+		// 	t, _ := template.New("foo").Parse(userTemplate)
+		// 	t.Execute(w, gothUser)
+		// } else {
+		gothic.BeginAuthHandler(w, r)
+		// }
+	})
 
 	return r
 }
@@ -53,5 +70,5 @@ func (s *Server) getAuthCallbackFunction(w http.ResponseWriter, r *http.Request)
 
 	fmt.Println(user)
 
-	http.Redirect(w, r, "http://localhost:5173", http.StatusFound)
+	http.Redirect(w, r, "http://localhost:5173/dashboard", http.StatusFound)
 }
