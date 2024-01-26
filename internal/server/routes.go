@@ -1,7 +1,6 @@
 package server
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -16,25 +15,28 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
+	// root endpoint or route
 	r.Get("/", s.HelloWorldHandler)
+
 	r.Get("/health", s.healthHandler)
 
+	// clicking signin button hits this URL
+	r.Get("/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
+		q := r.URL.Query()
+		q.Add("provider", chi.URLParam(r, "provider"))
+		r.URL.RawQuery = q.Encode()
+
+		gothic.BeginAuthHandler(w, r)
+	})
+
+	// after user is authenticated, Google sends user details in this callback URL and stores sessions
 	r.Get("/auth/{provider}/callback", s.getAuthCallbackFunction)
 
+	// logout
 	r.Get("/logout/{provider}", func(res http.ResponseWriter, req *http.Request) {
 		gothic.Logout(res, req)
 		res.Header().Set("Location", "/")
 		res.WriteHeader(http.StatusTemporaryRedirect)
-	})
-
-	r.Get("/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
-		// try to get the user without re-authenticating
-		// if gothUser, err := gothic.CompleteUserAuth(w, r); err == nil {
-		// 	t, _ := template.New("foo").Parse(userTemplate)
-		// 	t.Execute(w, gothUser)
-		// } else {
-		gothic.BeginAuthHandler(w, r)
-		// }
 	})
 
 	return r
@@ -58,9 +60,9 @@ func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) getAuthCallbackFunction(w http.ResponseWriter, r *http.Request) {
-	provider := chi.URLParam(r, "provider")
-
-	r = r.WithContext(context.WithValue(context.Background(), "provider", provider))
+	// provider := chi.URLParam(r, "provider")
+	//
+	// r = r.WithContext(context.WithValue(context.Background(), "provider", provider))
 
 	user, err := gothic.CompleteUserAuth(w, r)
 	if err != nil {

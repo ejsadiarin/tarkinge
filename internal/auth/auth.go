@@ -28,6 +28,7 @@ func NewAuth() {
 
 	store := sessions.NewCookieStore([]byte(key))
 	store.MaxAge(MaxAge)
+
 	store.Options.Path = "/"
 	store.Options.HttpOnly = true
 	store.Options.Secure = IsProd
