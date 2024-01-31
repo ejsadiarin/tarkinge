@@ -10,9 +10,9 @@ export default function Card(props) {
   } : undefined;
 
   return (
-    <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes} className="bg-yellow-500 text-black rounded-md shadow-xl p-5 w-full">
       {props.children}
-    </button>
+    </div>
   );
 }
 

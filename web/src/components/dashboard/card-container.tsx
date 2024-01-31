@@ -7,10 +7,11 @@ export default function CardContainer(props) {
   });
   const style = {
     color: isOver ? 'green' : undefined,
+    backgroundColor: isOver ? 'gray' : undefined,
   };
 
   return (
-    <div ref={setNodeRef} style={style}>
+    <div ref={setNodeRef} style={style} className="w-full h-full">
       {props.children}
     </div>
   );

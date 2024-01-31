@@ -4,7 +4,7 @@ import CardContainer from './card-container';
 import { useState } from 'react';
 
 export default function LeverTest() {
-  const containers = ["In Progress", "Review", "Done"];
+  const containers = ["Backlog", "In Progress", "Done"];
   const [parent, setParent] = useState<string | null>(null);
 
   return (
@@ -20,34 +20,41 @@ export default function LeverTest() {
         <DndContext onDragEnd={handleDragEnd}>
           <section className="flex justify-between w-full h-full p-10 ">
             {/* TODO: handle parent === null ? no display (need to '+' button to add new card), else display in backlog/default */}
-            {parent === null ? (
-              <div className="flex flex-col">
-                <h1 className="font-bold text-xl">Backlog</h1>
-                <CardContainer key="Backlog" id="Backlog">
-                  <Card id="draggable">Drag me</Card>
-                </CardContainer>
-              </div>
-            ) : (
-              <div className="flex flex-col">
-                <h1 className="font-bold text-xl">Backlog</h1>
-                <CardContainer key="Backlog" id="Backlog">
-                  {parent === "Backlog" ? (
-                    <Card id="draggable">Drag me</Card>
-                  ) : 'Empty...'}
-                </CardContainer>
-              </div>
-            )}
 
-            {containers.map((containerName, idx) => (
-              <div className="flex flex-col">
-                <h1 className="font-bold text-xl">{containerName}</h1>
-                <CardContainer key={idx} id={containerName}>
-                  {parent === containerName ? (
-                    <Card id="draggable">Drag me</Card>
-                  ) : 'Drop here'}
-                </CardContainer>
-              </div>
-            ))}
+            {/* {parent === null ? ( */}
+            {/*   <div className="flex flex-col"> */}
+            {/*     <h1 className="font-bold text-xl">Backlog</h1> */}
+            {/*     <CardContainer key="Backlog" id="Backlog"> */}
+            {/*       <Card id="draggable">Drag me</Card> */}
+            {/*     </CardContainer> */}
+            {/*   </div> */}
+            {/* ) : ( */}
+            {/*   <div className="flex flex-col"> */}
+            {/*     <h1 className="font-bold text-xl">Backlog</h1> */}
+            {/*     <CardContainer key="Backlog" id="Backlog"> */}
+            {/*       {parent === "Backlog" ? ( */}
+            {/*         <Card id="draggable">Drag me</Card> */}
+            {/*       ) : 'Empty...'} */}
+            {/*     </CardContainer> */}
+            {/*   </div> */}
+            {/* )} */}
+
+            <div className="flex gap-10 w-full h-full">
+              {containers.map((containerName, idx) => (
+                <div className="flex flex-col w-full h-full">
+                  <div className="flex justify-between items-center">
+                    <h1 className="font-bold text-xl">{containerName}</h1>
+                    {/* modal component to add cards here, when button is clicked */}
+                    <button>+</button>
+                  </div>
+                  <CardContainer key={idx} id={containerName}>
+                    {parent === containerName ? (
+                      <Card id="draggable">Drag me</Card>
+                    ) : 'Drop here'}
+                  </CardContainer>
+                </div>
+              ))}
+            </div>
           </section>
         </DndContext>
 
