@@ -1,12 +1,8 @@
 // import Navbar from "../components/dashboard/navbar";
 // import Sidebar from "../components/dashboard/sidebar"
 
-type FilterType = {
-  time: string,
-}
-
-const Filters = ["daily", "weekly", "monthly", "yearly"];
-
+import Levers from "../components/dashboard/levers";
+import LeverTest from "../components/dashboard/levertest";
 
 export default function Dashboard() {
   return (
@@ -38,21 +34,16 @@ export default function Dashboard() {
           </section>
         </nav>
 
-        <main className="flex w-full h-full">
+        <main className="flex justify-between w-full h-full">
+          {/* dailies view */}
           <section className="bg-purple-800 w-[20%]">
             <h1>daily levers</h1>
             <h1>daily todos</h1>
           </section>
 
           {/* this is the kanban with filters (or sorters) */}
-          <section className="flex flex-col w-[70%]">
-            <h1 className="text-5xl">Levers</h1>
-            <div className="flex gap-5">
-              {Filters.map((filter) => (
-                <button className="bg-gray-900 rounded-full">{filter}</button>
-              ))}
-            </div>
-          </section>
+          {/* <Levers /> */}
+          <LeverTest />
 
           <section className="bg-green-500 w-[20%]">
             <h1>notifications</h1>
