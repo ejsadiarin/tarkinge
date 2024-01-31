@@ -1,7 +1,8 @@
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import Card from './card';
-import CardContainer from './card-container';
+import Card from '@/components/dashboard/card';
+import CardContainer from '@/components/dashboard/card-container';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 export default function LeverTest() {
   const containers = ["Backlog", "In Progress", "Done"];
@@ -44,8 +45,8 @@ export default function LeverTest() {
                 <div className="flex flex-col w-full h-full">
                   <div className="flex justify-between items-center">
                     <h1 className="font-bold text-xl">{containerName}</h1>
-                    {/* modal component to add cards here, when button is clicked */}
-                    <button>+</button>
+                    {/* dialog component here from shadcn ui */}
+                    <Button variant="outline">+</Button>
                   </div>
                   <CardContainer key={idx} id={containerName}>
                     {parent === containerName ? (
