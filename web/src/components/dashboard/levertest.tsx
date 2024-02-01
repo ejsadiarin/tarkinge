@@ -3,10 +3,29 @@ import Card from '@/components/dashboard/card';
 import CardContainer from '@/components/dashboard/card-container';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export default function LeverTest() {
   const containers = ["Backlog", "In Progress", "Done"];
   const [parent, setParent] = useState<string | null>(null);
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { over } = event;
+
+    // If the item is dropped over a container, set it as the parent
+    // otherwise reset the parent to `null`
+    setParent(over ? over.id as string : null);
+  }
+
+  function handleAddCard() {
+  }
 
   return (
     <main className="w-full h-full">
@@ -46,7 +65,30 @@ export default function LeverTest() {
                   <div className="flex justify-between items-center">
                     <h1 className="font-bold text-xl">{containerName}</h1>
                     {/* dialog component here from shadcn ui */}
-                    <Button variant="outline">+</Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline">+</Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Add a new card</DialogTitle>
+                          <DialogDescription>
+                            Enter a title for the new card
+                          </DialogDescription>
+                        </DialogHeader>
+                        <input
+                          type="text"
+                          placeholder="Title"
+                          className="w-full p-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Description"
+                          className="w-full h-20 p-2"
+                        />
+                        <Button onClick={handleAddCard} variant="outline">Add</Button>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                   <CardContainer key={idx} id={containerName}>
                     {parent === containerName ? (
@@ -62,12 +104,4 @@ export default function LeverTest() {
       </section>
     </main>
   );
-
-  function handleDragEnd(event: DragEndEvent) {
-    const { over } = event;
-
-    // If the item is dropped over a container, set it as the parent
-    // otherwise reset the parent to `null`
-    setParent(over ? over.id as string : null);
-  }
 }
