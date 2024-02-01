@@ -12,6 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
+// TODO: schema for containers with endpoint for cards
+// TODO: when + is clicked, request an endpoint for the specific card with id
+// TODO: adding a new card to the specific container
+
 export default function LeverTest() {
   const containers = ["Backlog", "In Progress", "Done"];
   const [parent, setParent] = useState<string | null>(null);
