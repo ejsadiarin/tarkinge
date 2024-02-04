@@ -47,7 +47,6 @@ export default function Levers() {
             <section className="flex justify-between w-full h-full p-10 ">
               <div>
                 <h1>Backlog</h1>
-
                 {/* Card Container (droppable): card components go here */}
                 {containers.map((id) => (
                   <CardContainer key={id} id={id} className="flex flex-col gap-5" >
@@ -66,7 +65,6 @@ export default function Levers() {
                     {/* </div> */}
                   </CardContainer>
                 ))}
-
               </div>
               <div>
                 <h1>In Progress</h1>

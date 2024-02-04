@@ -1,7 +1,7 @@
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import Card from '@/components/dashboard/card';
 import CardContainer from '@/components/dashboard/card-container';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -13,12 +13,13 @@ import {
 } from "@/components/ui/dialog"
 
 // TODO: schema for containers with endpoint for cards
-// TODO: when + is clicked, request an endpoint for the specific card with id
+// TODO: when + is clicked, request an endpoint for the specific card with id (see trello)
 // TODO: adding a new card to the specific container
 
 export default function LeverTest() {
   const containers = ["Backlog", "In Progress", "Done"];
   const [parent, setParent] = useState<string | null>(null);
+  const newCardAdded = useRef(false);
 
   function handleDragEnd(event: DragEndEvent) {
     const { over } = event;
@@ -29,6 +30,10 @@ export default function LeverTest() {
   }
 
   function handleAddCard() {
+    newCardAdded.current = true;
+    // TODO: add a function here that calls to endpoint to add new card
+    // --> request: POST /api/levers/:id/cards with body { title: string, description: string }
+    // --> response: the endpoint just returns data in json of the new card
   }
 
   return (
